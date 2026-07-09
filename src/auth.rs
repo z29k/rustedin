@@ -33,7 +33,7 @@ pub async fn run_auth(alias: &str, org_id: Option<&str>) -> Result<(), String> {
         "https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id={}&redirect_uri={}&state={}&scope={}",
         urlencoded(&client_id),
         urlencoded(REDIRECT_URI),
-        &state,
+        state,
         urlencoded(scopes),
     );
 
