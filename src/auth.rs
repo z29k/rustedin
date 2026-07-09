@@ -10,8 +10,10 @@ const PERSONAL_SCOPES: &str = "w_member_social openid profile email";
 const ORGANIZATION_SCOPES: &str = "r_organization_social w_organization_social";
 
 fn random_state() -> String {
-    let mut rng = rand::thread_rng();
-    (0..16).map(|_| format!("{:x}", rng.gen::<u8>())).collect()
+    let mut rng = rand::rng();
+    (0..16)
+        .map(|_| format!("{:x}", rng.random::<u8>()))
+        .collect()
 }
 
 pub async fn run_auth(alias: &str, org_id: Option<&str>) -> Result<(), String> {
