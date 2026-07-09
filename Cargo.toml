@@ -1,0 +1,31 @@
+[package]
+name = "rustedin"
+version = "1.0.0"
+edition = "2021"
+rust-version = "1.74"
+description = "Multi-account LinkedIn CLI — post, share and reshare from personal accounts and company pages."
+authors = ["Quentin Mathis <quentin.mathis@z29k.fr>"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/z29k/rustedin"
+homepage = "https://github.com/z29k/rustedin"
+documentation = "https://github.com/z29k/rustedin#readme"
+keywords = ["linkedin", "cli", "oauth", "social", "automation"]
+categories = ["command-line-utilities", "api-bindings"]
+exclude = ["/assets", "/.github", "/*.jpg"]
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+reqwest = { version = "0.12", features = ["rustls-tls", "json"], default-features = false }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["full"] }
+open = "5"
+rand = "0.8"
+
+# Optimized release profile: smaller, faster binaries for distribution.
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true
