@@ -1,0 +1,8 @@
+#!/bin/sh
+# Pre-push hook: block the push if the CI checks would fail.
+# Enable once with:  git config core.hooksPath .githooks
+# Skip on purpose with:  git push --no-verify
+set -e
+
+echo "[pre-push] Running local CI checks (skip with --no-verify)..."
+exec "$(git rev-parse --show-toplevel)/scripts/check.sh"

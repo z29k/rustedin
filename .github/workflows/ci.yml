@@ -22,10 +22,8 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
-        with:
-          components: rustfmt, clippy
+      - name: Install Rust (pinned via rust-toolchain.toml)
+        run: rustup show && rustup component add rustfmt clippy
 
       - name: Cache cargo
         uses: Swatinem/rust-cache@v2
@@ -46,8 +44,8 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
+      - name: Install Rust (pinned via rust-toolchain.toml)
+        run: rustup show
 
       - name: Cache cargo
         uses: Swatinem/rust-cache@v2

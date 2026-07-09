@@ -7,12 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Pinned toolchain via `rust-toolchain.toml` so local and CI use the same Rust /
+  clippy version (no toolchain drift).
+- `scripts/check.sh` to run the exact CI checks locally in one command.
+- Opt-in `.githooks/pre-push` hook that blocks a push when the checks fail
+  (`git config core.hooksPath .githooks`).
+
 ### Changed
 
 - Bumped dependencies: `rand` 0.8 → 0.9 (migrated to the new `rng()` / `random()`
   API), `tokio` 1.52.3, `clap` 4.6.1, `serde_json` 1.0.150, `open` 5.3.6.
 - CI: bumped `actions/checkout` to v7 (runs on Node.js 24, resolves the Node.js 20
-  deprecation warning).
+  deprecation warning) and now installs the pinned toolchain via `rustup show`.
 
 ## [1.0.0] - 2026-07-09
 

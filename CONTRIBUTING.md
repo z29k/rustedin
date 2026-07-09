@@ -36,7 +36,9 @@ hotfix/urgent ──────────────► main ──► tag v
 
 ## Development setup
 
-Requires [Rust](https://rustup.rs/) (edition 2021, 1.74+).
+Requires [rustup](https://rustup.rs/). The exact toolchain is **pinned** in
+[`rust-toolchain.toml`](rust-toolchain.toml), so `rustup` installs and uses the
+same Rust/clippy version locally that CI uses — no "works on my machine" drift.
 
 ```bash
 git clone git@github.com:z29k/rustedin.git
@@ -44,14 +46,24 @@ cd rustedin
 cargo build
 ```
 
-Before pushing, make sure the same checks CI runs pass locally:
+### Run the CI checks locally (before every push)
+
+To avoid round-trips with CI, run the **exact** checks it runs, in one command:
 
 ```bash
-cargo fmt --all --check                       # formatting
-cargo clippy --all-targets -- -D warnings     # linting (warnings are errors)
-cargo build --release                         # it compiles
-cargo test                                    # tests (if any)
+./scripts/check.sh   # fmt + clippy (-D warnings) + release build + tests
 ```
+
+### Auto-run checks on push (recommended)
+
+Enable the versioned pre-push hook once — it runs `scripts/check.sh` and blocks
+the push if anything fails:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+Bypass it deliberately with `git push --no-verify`.
 
 > **Never commit `rustedin.json`.** It holds OAuth tokens and client secrets and
 > is already listed in `.gitignore`. See [SECURITY.md](SECURITY.md).
