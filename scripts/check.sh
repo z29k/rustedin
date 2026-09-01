@@ -16,4 +16,11 @@ cargo build --release
 echo "==> cargo test"
 cargo test
 
+# Each platform must also build on its own, or the Cargo features are a lie.
+echo "==> cargo check --no-default-features --features linkedin"
+cargo check --no-default-features --features linkedin --all-targets
+
+echo "==> cargo check --no-default-features --features meta"
+cargo check --no-default-features --features meta --all-targets
+
 echo "✅ All checks passed — safe to push."
