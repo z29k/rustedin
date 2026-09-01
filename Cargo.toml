@@ -1,18 +1,25 @@
 [package]
 name = "rustedin"
-version = "1.0.0"
+version = "2.0.0"
 edition = "2021"
 rust-version = "1.74"
-description = "Multi-account LinkedIn CLI — post, share and reshare from personal accounts and company pages."
+description = "Multi-account social CLI — publish to LinkedIn, Facebook Pages and Instagram from a single binary."
 authors = ["Quentin Mathis <quentin.mathis@z29k.fr>"]
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/z29k/rustedin"
 homepage = "https://github.com/z29k/rustedin"
 documentation = "https://github.com/z29k/rustedin#readme"
-keywords = ["linkedin", "cli", "oauth", "social", "automation"]
+keywords = ["linkedin", "facebook", "instagram", "cli", "social"]
 categories = ["command-line-utilities", "api-bindings"]
 exclude = ["/assets", "/.github", "/*.jpg"]
+
+# One provider per feature. The config file always round-trips every section,
+# so a build with a platform disabled never destroys the other's credentials.
+[features]
+default = ["linkedin", "meta"]
+linkedin = []
+meta = ["dep:hmac", "dep:sha2", "reqwest/multipart"]
 
 [dependencies]
 clap = { version = "4", features = ["derive"] }
@@ -22,6 +29,10 @@ serde_json = "1"
 tokio = { version = "1", features = ["full"] }
 open = "5"
 rand = "0.9"
+# appsecret_proof: HMAC-SHA256 of the access token, keyed with the app secret.
+# Meta requires it as soon as "Require App Secret" is enabled on the app.
+hmac = { version = "0.12", optional = true }
+sha2 = { version = "0.10", optional = true }
 
 # Optimized release profile: smaller, faster binaries for distribution.
 [profile.release]
