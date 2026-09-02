@@ -453,6 +453,15 @@ The same content maps onto what each platform actually accepts:
 | **Facebook** | feed post | photo post | link preview (URL moves into the caption on a photo post) |
 | **Instagram** | *refused* | feed post | appended to the caption as plain text |
 
+> **Why Instagram gets plain text.** The Content Publishing API exposes no link
+> field at all: a container takes `image_url` / `video_url`, `media_type`,
+> `caption` and a handful of flags, and nothing that attaches a URL. Instagram
+> also does not turn a caption URL into a hyperlink — deliberately, to keep
+> people in the app. Since March 2026 it has been testing clickable captions for
+> Meta Verified professional creators, but only in the mobile app and not
+> through the API. So rustedin appends the URL and warns; there is no other
+> option.
+
 ```bash
 rustedin broadcast \
   --to=linkedin:quentin,linkedin:z29k,facebook:z29k,instagram:z29k \
@@ -1100,12 +1109,16 @@ platform at all is refused at compile time.
     through the linked Facebook Page (see [How media works](#how-media-works)).
 12. **Instagram has no scheduling API.** `--schedule` is Facebook-only.
 13. **No user tagging on Instagram** (`user_tags`) and no product/shopping tags.
-14. **No Facebook resumable video upload.** Videos above ~1 GB must be passed as
+14. **No clickable link on Instagram, anywhere.** The Content Publishing API has
+    no link field: a `--link` lands in the caption as plain text, and the Story
+    link sticker — which does work in the app — is not exposed by the API
+    either.
+15. **No Facebook resumable video upload.** Videos above ~1 GB must be passed as
     a `--video` URL for Meta to fetch.
-15. **No Instagram Login path.** rustedin authenticates through Facebook Login,
+16. **No Instagram Login path.** rustedin authenticates through Facebook Login,
     which requires every Instagram account to be linked to a Facebook Page.
-16. **Relay photos are kept by default.** Pass `--cleanup-relay` to delete them.
-17. **Instagram publishing is sequential**, including carousel children.
+17. **Relay photos are kept by default.** Pass `--cleanup-relay` to delete them.
+18. **Instagram publishing is sequential**, including carousel children.
 
 ---
 

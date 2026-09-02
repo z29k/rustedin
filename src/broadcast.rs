@@ -260,7 +260,8 @@ fn check_content(targets: &[Target], content: &Content) -> Result<(), String> {
     }
     if content.link.is_some() && targets.iter().any(|t| t.platform == Platform::Instagram) {
         crate::note!(
-            "Warning: Instagram does not linkify captions; the link is appended as plain text."
+            "Warning: Instagram's publishing API has no link field; the link is appended to \
+             the caption, where Instagram does not make it clickable."
         );
     }
     Ok(())

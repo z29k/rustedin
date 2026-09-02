@@ -466,6 +466,15 @@ Le même contenu est adapté à ce que chaque plateforme accepte réellement :
 | **Facebook** | post feed | post photo | aperçu de lien (sur un post photo, l'URL passe dans la légende) |
 | **Instagram** | *refusé* | post feed | ajouté à la légende en texte brut |
 
+> **Pourquoi Instagram n'a droit qu'au texte brut.** L'API de publication
+> n'expose aucun champ de lien : un conteneur accepte `image_url` / `video_url`,
+> `media_type`, `caption` et quelques drapeaux, rien qui attache une URL.
+> Instagram ne transforme pas non plus une URL de légende en hyperlien — un
+> choix délibéré, pour garder les gens dans l'app. Depuis mars 2026 des légendes
+> cliquables sont en test pour les créateurs professionnels Meta Verified, mais
+> uniquement dans l'app mobile et pas via l'API. rustedin ajoute donc l'URL et
+> avertit ; il n'y a pas d'autre option.
+
 ```bash
 rustedin broadcast \
   --to=linkedin:quentin,linkedin:z29k,facebook:z29k,instagram:z29k \
@@ -1131,14 +1140,18 @@ compilation.
     Facebook.
 13. **Pas de tag d'utilisateurs sur Instagram** (`user_tags`) ni de tags
     produits/shopping.
-14. **Pas d'upload vidéo résumable sur Facebook.** Au-delà de ~1 Go, passez la
+14. **Aucun lien cliquable sur Instagram, nulle part.** L'API de publication n'a
+    pas de champ de lien : un `--link` finit en texte brut dans la légende, et
+    le sticker de lien des Stories — qui fonctionne pourtant dans l'app — n'est
+    pas davantage exposé par l'API.
+15. **Pas d'upload vidéo résumable sur Facebook.** Au-delà de ~1 Go, passez la
     vidéo en URL via `--video` pour que Meta la récupère.
-15. **Pas de chemin Instagram Login.** rustedin s'authentifie via Facebook
+16. **Pas de chemin Instagram Login.** rustedin s'authentifie via Facebook
     Login, ce qui impose que chaque compte Instagram soit lié à une Page
     Facebook.
-16. **Les photos relais sont conservées par défaut.** Utilisez
+17. **Les photos relais sont conservées par défaut.** Utilisez
     `--cleanup-relay` pour les supprimer.
-17. **La publication Instagram est séquentielle**, y compris pour les éléments
+18. **La publication Instagram est séquentielle**, y compris pour les éléments
     d'un carrousel.
 
 ---
