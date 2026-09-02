@@ -1,0 +1,7 @@
+# Pinned toolchain — used by BOTH local development and CI so that
+# `cargo fmt`, `clippy`, `build` and `test` behave identically everywhere.
+# Bump this deliberately (e.g. to pick up new clippy lints); CI picks it up
+# automatically via `rustup show`.
+[toolchain]
+channel = "1.93.0"
+components = ["rustfmt", "clippy"]

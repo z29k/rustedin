@@ -20,12 +20,10 @@ jobs:
     name: Format & Clippy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
-        with:
-          components: rustfmt, clippy
+      - name: Install Rust (pinned via rust-toolchain.toml)
+        run: rustup show && rustup component add rustfmt clippy
 
       - name: Cache cargo
         uses: Swatinem/rust-cache@v2
@@ -36,6 +34,26 @@ jobs:
       - name: Clippy
         run: cargo clippy --all-targets --all-features -- -D warnings
 
+  features:
+    name: Feature matrix (${{ matrix.features }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        features: [linkedin, meta]
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install Rust (pinned via rust-toolchain.toml)
+        run: rustup show
+
+      - name: Cache cargo
+        uses: Swatinem/rust-cache@v2
+
+      # Each platform must build on its own, or the Cargo features are a lie.
+      - name: Check
+        run: cargo check --no-default-features --features ${{ matrix.features }} --all-targets
+
   test:
     name: Build & Test (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
@@ -44,10 +62,10 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
+      - name: Install Rust (pinned via rust-toolchain.toml)
+        run: rustup show
 
       - name: Cache cargo
         uses: Swatinem/rust-cache@v2
