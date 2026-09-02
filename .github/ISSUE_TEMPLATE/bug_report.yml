@@ -21,9 +21,9 @@ body:
       label: Steps to reproduce
       description: The exact commands you ran (redact any secrets/tokens).
       placeholder: |
-        1. rustedin setup ...
-        2. rustedin auth ...
-        3. rustedin post ...
+        1. rustedin linkedin setup ...
+        2. rustedin linkedin auth ...
+        3. rustedin linkedin post ...
       render: shell
     validations:
       required: true
@@ -32,7 +32,7 @@ body:
     attributes:
       label: rustedin version
       description: Output of `rustedin --version`.
-      placeholder: rustedin 1.0.0
+      placeholder: rustedin 2.0.0
     validations:
       required: true
   - type: dropdown

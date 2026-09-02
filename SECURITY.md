@@ -20,14 +20,18 @@ about the fix and disclosure timeline.
 
 ## Handling of secrets
 
-rustedin stores OAuth tokens and LinkedIn app **client secrets** in a local
-`rustedin.json` file next to the binary (or at the path given via `--config`).
+rustedin stores OAuth tokens, Facebook Page tokens and the **client secrets**
+of every configured app in a single local `rustedin.json` file next to the
+binary (or at the path given via `--config`). It is written `0600` on Unix.
 
 - This file is **git-ignored** and must **never** be committed or shared.
 - If a `rustedin.json` (or any client secret / access token) is ever exposed,
-  **rotate the affected LinkedIn app client secret** in the
-  [LinkedIn Developer portal](https://www.linkedin.com/developers/apps) and
-  re-authenticate every account with `rustedin auth`.
+  rotate the affected app secret and re-authenticate every account:
+  - **LinkedIn** — [LinkedIn Developer portal](https://www.linkedin.com/developers/apps),
+    then `rustedin linkedin auth --account=<alias>`.
+  - **Meta** — [Meta App Dashboard](https://developers.facebook.com/apps) →
+    Settings → Basic → App Secret, then `rustedin meta auth --account=<alias>`.
+    Rotating the app secret also invalidates every Page token derived from it.
 
 ## Supported versions
 

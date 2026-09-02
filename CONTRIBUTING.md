@@ -68,6 +68,26 @@ Bypass it deliberately with `git push --no-verify`.
 > **Never commit `rustedin.json`.** It holds OAuth tokens and client secrets and
 > is already listed in `.gitignore`. See [SECURITY.md](SECURITY.md).
 
+## Project layout
+
+```
+src/
+├── main.rs          # CLI definition and dispatch
+├── commands.rs      # cross-platform commands (accounts, status, migrate)
+├── broadcast.rs     # cross-posting to several platforms at once
+├── core/            # platform-agnostic: config, http, oauth, media, output
+└── providers/
+    ├── linkedin/    # api, auth, publish, store, commands
+    └── meta/        # api, auth, facebook, instagram, store, commands
+```
+
+A provider knows nothing about the others; everything shared goes through
+`core`. Adding a platform means adding a module under `providers/`, a section
+to the config schema in `core/config.rs`, and a subcommand group in `main.rs`.
+
+Each platform is behind a Cargo feature (`linkedin`, `meta`, both by default),
+so `scripts/check.sh` also verifies that each builds on its own.
+
 ## Commit messages
 
 We follow [Conventional Commits](https://www.conventionalcommits.org/):
@@ -81,9 +101,9 @@ Common types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, `ci`.
 Examples:
 
 ```
-feat(share): support full-size image mode
-fix(auth): handle missing refresh_token in token response
-docs(readme): document the comments command
+feat(instagram): support carousel collaborators
+fix(linkedin): handle missing refresh_token in token response
+docs(readme): document the broadcast command
 ```
 
 ## Pull request checklist
