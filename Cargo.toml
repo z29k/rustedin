@@ -31,7 +31,7 @@ open = "5"
 rand = "0.9"
 # appsecret_proof: HMAC-SHA256 of the access token, keyed with the app secret.
 # Meta requires it as soon as "Require App Secret" is enabled on the app.
-hmac = { version = "0.12", optional = true }
+hmac = { version = "0.13", optional = true }
 sha2 = { version = "0.10", optional = true }
 
 # Optimized release profile: smaller, faster binaries for distribution.
