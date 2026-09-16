@@ -5,7 +5,7 @@
 //! the URL differs, so the listener, the CSRF check, the percent-decoding and
 //! the two HTML pages the user actually sees live here.
 
-use rand::Rng;
+use rand::RngExt;
 use std::time::Duration;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::TcpListener;

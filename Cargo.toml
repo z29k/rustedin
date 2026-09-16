@@ -2,7 +2,7 @@
 name = "rustedin"
 version = "2.0.0"
 edition = "2021"
-rust-version = "1.74"
+rust-version = "1.88"
 description = "Multi-account social CLI — publish to LinkedIn, Facebook Pages and Instagram from a single binary."
 authors = ["Quentin Mathis <quentin.mathis@z29k.fr>"]
 license = "MIT"
@@ -23,12 +23,12 @@ meta = ["dep:hmac", "dep:sha2", "reqwest/multipart"]
 
 [dependencies]
 clap = { version = "4", features = ["derive"] }
-reqwest = { version = "0.12", features = ["rustls-tls", "json"], default-features = false }
+reqwest = { version = "0.13", features = ["rustls", "json", "form", "query"], default-features = false }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 tokio = { version = "1", features = ["full"] }
 open = "5"
-rand = "0.9"
+rand = "0.10"
 # appsecret_proof: HMAC-SHA256 of the access token, keyed with the app secret.
 # Meta requires it as soon as "Require App Secret" is enabled on the app.
 hmac = { version = "0.13", optional = true }

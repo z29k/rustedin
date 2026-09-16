@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- HTTPS certificates are now verified against the operating system's trust
+  store (`rustls-platform-verifier`, the `reqwest` 0.13 default) instead of the
+  Mozilla roots bundled in the binary.
+- Minimum supported Rust version raised from 1.74 (no longer accurate) to 1.88,
+  the oldest release the current dependency tree compiles with.
+
+### Dependencies
+
+- Bumped: `reqwest` 0.12 → 0.13 (`rustls-tls` feature renamed `rustls`;
+  `form` and `query` are now opt-in features), `rand` 0.9 → 0.10 (`random()`
+  moved to the `RngExt` trait), `hmac` 0.12 → 0.13 and `sha2` 0.10 → 0.11
+  (upgraded together; `new_from_slice` now comes from `KeyInit`), `tokio`
+  1.53.1, `clap` 4.6.7, `serde` 1.0.229, `serde_json` 1.0.151, `open` 5.4.4.
+- Refreshed every transitive dependency in `Cargo.lock`.
+- Pinned toolchain bumped from Rust 1.93.0 to 1.98.1.
+
 ## [2.0.0] - 2026-09-01
 
 rustedin becomes multi-platform. It absorbs `rustameta` — a sibling CLI for

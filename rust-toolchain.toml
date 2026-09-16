@@ -3,5 +3,5 @@
 # Bump this deliberately (e.g. to pick up new clippy lints); CI picks it up
 # automatically via `rustup show`.
 [toolchain]
-channel = "1.93.0"
+channel = "1.98.1"
 components = ["rustfmt", "clippy"]
